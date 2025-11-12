@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        createTaskElement(taskText, false);
+        const listItem = createTaskElement(taskText, false);
+        taskList.prepend(listItem);
+        
         saveTasks();
 
         // ★リクエストされた機能：入力欄を空にする
@@ -62,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         listItem.appendChild(checkbox);
         listItem.appendChild(taskTextSpan);
         listItem.appendChild(deleteButton);
-        taskList.appendChild(listItem);
+        
+        return listItem;
     }
 
     // D. タスクをlocalStorageに保存する関数
@@ -82,7 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // ★修正点：データがない場合は空の配列を使用
         const tasks = JSON.parse(localStorage.getItem('tasks')) || []; 
         tasks.forEach(task => { // 配列のforEachを使用
-            createTaskElement(task.text, task.isCompleted);
+            const listItem = createTaskElement(task.text, task.isCompleted);
+            taskList.appendChild(listItem);
         });
     }
 
